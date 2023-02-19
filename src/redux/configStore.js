@@ -1,4 +1,4 @@
-import { applyMiddleware, combineReducers } from "redux";
+import { legacy_createStore, applyMiddleware, combineReducers } from "redux";
 import { ToDoListReducer } from "./reducers/ToDoListReducer";
 import { LoadingReducer } from "./reducers/LoadingReducer";
 import { ModalReducer } from "./reducers/ModalReducer";
@@ -17,8 +17,7 @@ import { TaskTypeReducer } from "./reducers/TaskTypeReducer";
 import { PriorityReducer } from "./reducers/PriorityReducer";
 import { StatusReducer } from "./reducers/StatusReducer";
 import { TaskReducer } from "./reducers/TaskReducer";
-import { legacy_createStore } from "redux";
-
+import { CommentReducer } from "./reducers/CommentReducer.js";
 const middleWareSaga = createMiddleWareSaga();
 const rootReducer = combineReducers({
    //reducer khai báo tại đây
@@ -35,6 +34,7 @@ const rootReducer = combineReducers({
    PriorityReducer,
    StatusReducer,
    TaskReducer,
+   CommentReducer,
 });
 
 const store = legacy_createStore(rootReducer, applyMiddleware(reduxThunk, middleWareSaga));

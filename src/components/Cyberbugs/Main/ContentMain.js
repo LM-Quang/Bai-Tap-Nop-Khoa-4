@@ -1,6 +1,7 @@
 import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
+import { GET_ALL_COMMENT_SAGA } from "../../../redux/constants/Cyberbugs/CommentConst.js";
 import { GET_TASK_DETAIL_SAGA, UPDATE_STATUS_TASK_SAGA } from "../../../redux/constants/Cyberbugs/TaskConstants";
 export default function ContentMain(props) {
    const { projectDetail } = props;
@@ -50,6 +51,7 @@ export default function ContentMain(props) {
                                                    data-target="#infoModal"
                                                    onClick={() => {
                                                       dispatch({ type: GET_TASK_DETAIL_SAGA, taskId: task.taskId });
+                                                      dispatch({ type: GET_ALL_COMMENT_SAGA, taskId: task.taskId });
                                                    }}
                                                 >
                                                    <p className="font-weight-300">{task.taskName}</p>

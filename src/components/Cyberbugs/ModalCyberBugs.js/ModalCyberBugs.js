@@ -7,6 +7,7 @@ import { CHANGE_ASSIGNESS, CHANGE_TASK_MODAL, HANDLE_CHANGE_POST_API_SAGA, REMOV
 import { GET_ALL_TASK_TYPE_SAGA } from "../../../redux/constants/Cyberbugs/TaskTypeConstants";
 import { Editor } from "@tinymce/tinymce-react";
 import { Select } from "antd";
+import { DELETE_COMMENT_SAGA, INSERT_COMMENT_SAGA, UPDATE_COMMENT_SAGA } from "../../../redux/constants/Cyberbugs/CommentConst.js";
 
 export default function ModalCyberBugs(props) {
    const { taskDetailModal } = useSelector((state) => state.TaskReducer);
@@ -14,9 +15,15 @@ export default function ModalCyberBugs(props) {
    const { arrPriority } = useSelector((state) => state.PriorityReducer);
    const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
    const { projectDetail } = useSelector((state) => state.ProjectReducer);
+   const { listComment } = useSelector((state) => state.CommentReducer);
    const [visibleEditor, setVisibleEditor] = useState(false);
+   const [visibleComment, setVisibleComment] = useState(false);
+   const [commentUpdate, setCommentUpdate] = useState(false);
+   const [commentId, setCommentId] = useState(0);
    const [historyContent, setHistoryContent] = useState(taskDetailModal.description);
    const [content, setContent] = useState(taskDetailModal.description);
+   const [contentComment, setContentComment] = useState("");
+   const [contentCommentUpdate, setContentCommentUpdate] = useState("");
    const dispatch = useDispatch();
    useEffect(() => {
       dispatch({ type: GET_ALL_STATUS_SAGA });
@@ -28,15 +35,14 @@ export default function ModalCyberBugs(props) {
    const renderDescription = () => {
       const jsxDescription = ReactHtmlParser(taskDetailModal.description);
       return (
-         <div>
+         <div style={{ cursor: "pointer" }}>
             {visibleEditor ? (
                <div>
-                  {" "}
                   <Editor
                      name="description"
                      initialValue={taskDetailModal.description}
                      init={{
-                        selector: "textarea#myTextArea",
+                        selector: "textarea#myDescription",
                         height: 500,
                         menubar: false,
                         plugins: ["advlist autolink lists link image charmap print preview anchor", "searchreplace visualblocks code fullscreen", "insertdatetime media table paste code help wordcount"],
@@ -51,7 +57,7 @@ export default function ModalCyberBugs(props) {
                      }}
                   />
                   <button
-                     className="btn btn-primary m-2"
+                     className="btn btn-success m-2"
                      onClick={() => {
                         dispatch({
                            type: HANDLE_CHANGE_POST_API_SAGA,
@@ -65,7 +71,7 @@ export default function ModalCyberBugs(props) {
                      Save
                   </button>
                   <button
-                     className="btn btn-primary m-2"
+                     className="btn btn-secondary m-2"
                      onClick={() => {
                         dispatch({
                            type: HANDLE_CHANGE_POST_API_SAGA,
@@ -141,7 +147,6 @@ export default function ModalCyberBugs(props) {
          </div>
       );
    };
-
    return (
       <div className="modal fade" id="infoModal" tabIndex={-1} role="dialog" aria-labelledby="infoModal" aria-hidden="true">
          <div className="modal-dialog modal-info">
@@ -184,6 +189,7 @@ export default function ModalCyberBugs(props) {
                               <p>Description</p>
                               {renderDescription()}
                            </div>
+                           {/* ---------------------------------------- Comment Section ------------------------------------------ */}
                            <div className="comment">
                               <h6>Comment</h6>
                               <div className="block-comment" style={{ display: "flex" }}>
@@ -191,38 +197,124 @@ export default function ModalCyberBugs(props) {
                                     <img src={require("../../../assets/img/download (1).jfif")} alt="xyz" />
                                  </div>
                                  <div className="input-comment">
-                                    <input type="text" placeholder="Add a comment ..." />
-                                    <p>
-                                       <span style={{ fontWeight: 500, color: "gray" }}>Protip:</span>
-                                       <span>
-                                          press
-                                          <span style={{ fontWeight: "bold", background: "#ecedf0", color: "#b4bac6" }}>M</span>
-                                          to comment
-                                       </span>
-                                    </p>
+                                    {visibleComment ? (
+                                       <div>
+                                          <Editor
+                                             name="comment"
+                                             initialValue={contentCommentUpdate}
+                                             init={{
+                                                selector: "textarea#myComment",
+                                                height: 150,
+                                                menubar: false,
+                                                plugins: [
+                                                   "advlist autolink lists link image charmap print preview anchor",
+                                                   "searchreplace visualblocks code fullscreen",
+                                                   "insertdatetime media table paste code help wordcount",
+                                                ],
+                                                toolbar:
+                                                   // eslint-disable-next-line no-multi-str
+                                                   "undo redo | formatselect | bold italic backcolor | \
+                                             alignleft aligncenter alignright alignjustify | \
+                                             bullist numlist outdent indent | removeformat | help",
+                                             }}
+                                             onEditorChange={(content, editor) => {
+                                                setContentComment(content);
+                                             }}
+                                          />
+                                          <button
+                                             className="btn btn-success m-2"
+                                             onClick={() => {
+                                                if (commentUpdate) {
+                                                   dispatch({
+                                                      type: UPDATE_COMMENT_SAGA,
+                                                      id: commentId,
+                                                      contentComment: contentComment,
+                                                      taskId: taskDetailModal.taskId,
+                                                   });
+                                                   setCommentUpdate(false);
+                                                   setContentCommentUpdate("");
+                                                } else {
+                                                   dispatch({
+                                                      type: INSERT_COMMENT_SAGA,
+                                                      comment: {
+                                                         taskId: taskDetailModal.taskId,
+                                                         contentComment: contentComment,
+                                                      },
+                                                   });
+                                                }
+                                                setVisibleComment(!visibleComment);
+                                             }}
+                                          >
+                                             Save
+                                          </button>
+                                          <button
+                                             className="btn btn-secondary m-2"
+                                             onClick={() => {
+                                                setVisibleComment(!visibleComment);
+                                             }}
+                                          >
+                                             Cancel
+                                          </button>
+                                       </div>
+                                    ) : (
+                                       <div
+                                          style={{ padding: "5px", border: "1px solid black", cursor: "pointer" }}
+                                          onClick={() => {
+                                             setVisibleComment(!visibleComment);
+                                          }}
+                                       >
+                                          Click here to comment
+                                       </div>
+                                    )}
                                  </div>
                               </div>
                               <div className="lastest-comment">
-                                 <div className="comment-item">
-                                    <div className="display-comment" style={{ display: "flex" }}>
-                                       <div className="avatar">
-                                          <img src={require("../../../assets/img/download (1).jfif")} alt="xyz" />
-                                       </div>
-                                       <div>
-                                          <p style={{ marginBottom: 5 }}>
-                                             Lord Gaben <span>a month ago</span>
-                                          </p>
-                                          <p style={{ marginBottom: 5 }}>
-                                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus tempora ex voluptatum saepe ab officiis alias totam ad accusamus molestiae?
-                                          </p>
-                                          <div>
-                                             <span style={{ color: "#929398" }}>Edit</span>•<span style={{ color: "#929398" }}>Delete</span>
+                                 {listComment?.map((comment, index) => {
+                                    return (
+                                       <div key={index} className="comment-item mt-2">
+                                          <div className="display-comment" style={{ display: "flex" }}>
+                                             <div className="avatar">
+                                                <img src={comment.user.avatar} alt="xyz" />
+                                             </div>
+                                             <div>
+                                                <p style={{ marginBottom: 5, fontWeight: "bold" }}>
+                                                   {comment.user.name} <span style={{ fontWeight: "normal" }}>a month ago</span>
+                                                </p>
+                                                {ReactHtmlParser(comment.contentComment)}
+                                                <div>
+                                                   <span
+                                                      style={{ color: "#929398", cursor: "pointer" }}
+                                                      onClick={() => {
+                                                         setContentCommentUpdate(comment.contentComment);
+                                                         setVisibleComment(!visibleComment);
+                                                         setCommentUpdate(true);
+                                                         setCommentId(comment.id);
+                                                      }}
+                                                   >
+                                                      Edit
+                                                   </span>
+                                                   •{" "}
+                                                   <span
+                                                      style={{ color: "#929398", cursor: "pointer" }}
+                                                      onClick={() => {
+                                                         dispatch({
+                                                            type: DELETE_COMMENT_SAGA,
+                                                            idComment: comment.id,
+                                                            taskId: taskDetailModal.taskId,
+                                                         });
+                                                      }}
+                                                   >
+                                                      Delete
+                                                   </span>
+                                                </div>
+                                             </div>
                                           </div>
                                        </div>
-                                    </div>
-                                 </div>
+                                    );
+                                 })}
                               </div>
                            </div>
+                           {/* ---------------------------------------- End Comment Section ------------------------------------------ */}
                         </div>
                         <div className="col-4">
                            <div className="status">

@@ -29,7 +29,7 @@ export default function SidebarCyberbugs() {
          collapsed: !state.collapsed,
       });
    };
-   const onClick = (e) => {
+   const onClickMenu = (e) => {
       dispatch({
          type: "OPEN_FORM_CREATE_TASK",
          Component: <FormCreateTask />,
@@ -57,7 +57,7 @@ export default function SidebarCyberbugs() {
                         Search
                      </Menu.Item>
                 </Menu> */}
-            <Menu onClick={onClick} theme="dark" mode="inline" selectedKeys={[current]} items={items} />
+            <Menu onClick={onClickMenu} theme="dark" mode="inline" selectedKeys={[current]} items={items} />
          </Sider>
       </div>
    );

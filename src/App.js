@@ -43,6 +43,7 @@ export default function App() {
             <HomeTemplate exact path="/about" Component={About} />
             <HomeTemplate exact path="/dragdrop" Component={DemoDragDrop} />
             <UserLoginTemplate exact path="/login" Component={LoginCyberBugs} />
+            <UserLoginTemplate exact path="/" Component={LoginCyberBugs} />
             <HomeTemplate exact path="/detail/:id" Component={Detail} />
             <HomeTemplate exact path="/profile" Component={Profile} />
             <HomeTemplate exact path="/todolistrfc" Component={TodolistRFC} />
@@ -56,7 +57,6 @@ export default function App() {
             <CyberbugsTemplate exact path="/createproject" Component={CreateProject} />
             <CyberbugsTemplate exact path="/projectmanagement" Component={ProjectManagement} />
             <CyberbugsTemplate exact path="/projectdetail/:projectId" Component={indexCyberBugs} />
-            <CyberbugsTemplate exact path="/" Component={ProjectManagement} />
             <HomeTemplate path="*" component={PageNotFound} />
          </Switch>
       </div>

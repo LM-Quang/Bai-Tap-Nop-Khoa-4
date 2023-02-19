@@ -43,7 +43,6 @@ export function* theoDoiCreateTaskSaga() {
 
 function* getTaskDetailSaga(action) {
    const { taskId } = action;
-
    try {
       const { data } = yield call(() => taskService.getTaskDetail(taskId));
 

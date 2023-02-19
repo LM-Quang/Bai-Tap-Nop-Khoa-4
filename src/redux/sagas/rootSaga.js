@@ -8,6 +8,7 @@ import * as TaskTypeSaga from "./Cyberbugs/TaskTypeSaga";
 import * as PrioritySaga from "./Cyberbugs/PrioritySaga";
 import * as TaskSaga from "./Cyberbugs/TaskSaga";
 import * as StatusSaga from "./Cyberbugs/StatusSaga";
+import * as CommentSaga from "./Cyberbugs/CommentSaga.js";
 
 export function* rootSaga() {
    yield all([
@@ -41,5 +42,11 @@ export function* rootSaga() {
       TaskSaga.theoDoiUpdateTaskStatusSaga(),
       TaskSaga.theoDoiHandleChangePostApi(),
       TaskSaga.theoDoiUdpateTask(),
+
+      //Nghiệp vụ comment .... ,
+      CommentSaga.theoDoiGetAllCommentSaga(),
+      CommentSaga.theoDoiInsertCommentSaga(),
+      CommentSaga.theoDoiUpdateCommentSaga(),
+      CommentSaga.theoDoiDeleteCommentSaga(),
    ]);
 }
