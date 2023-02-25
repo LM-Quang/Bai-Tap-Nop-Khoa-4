@@ -20,8 +20,13 @@ export function* rootSaga() {
       ToDoListSaga.theoDoiRejectTask(),
 
       //Nghiệp vụ cyberbugs .... ,
+      // ---------------- user ------------
+      Cyberbugs.theoDoiSignUpSaga(),
       Cyberbugs.theoDoiSignin(),
       Cyberbugs.theoDoiGetUser(),
+      Cyberbugs.theoDoiGetListUser(),
+      Cyberbugs.theoDoiEditUser(),
+      Cyberbugs.theoDoiDeleteUser(),
       Cyberbugs.theoDoiRemoveUserProject(),
       Cyberbugs.theoDoiAddUserProject(),
       Cyberbugs.theoDoiGetUserByProjectIdSaga(),

@@ -2,6 +2,7 @@ import Axios from "axios";
 import { DOMAIN_CYBERBUG, TOKEN } from "../util/constants/settingSystem";
 
 export const cyberbugsService = {
+   // -------------------- user service -----------------
    signinCyberBugs: (userLogin) => {
       return Axios({
          url: `${DOMAIN_CYBERBUG}/users/signin`,
@@ -9,6 +10,14 @@ export const cyberbugsService = {
          data: userLogin,
       });
    },
+   signupCyberBugs: (userSignup) => {
+      return Axios({
+         url: `${DOMAIN_CYBERBUG}/Users/signup`,
+         method: "POST",
+         data: userSignup,
+      });
+   },
+   // ------------------ project service ------------------
    getAllProjectCategory: () => {
       return Axios({
          url: `${DOMAIN_CYBERBUG}/ProjectCategory`,

@@ -24,6 +24,8 @@ import DrawerCyberBugs from "./HOC/CyberbugsHOC/DrawerCyberBugs";
 import DemoDragDrop from "./pages/DemoDragDrop/DemoDragDrop";
 import Demo from "./pages/Demo/Demo";
 import DragAndDropDnD from "./pages/DragAndDropDnD/DragAndDropDnD";
+import Signup from "./pages/Signup/Signup.js";
+import UserManagement from "./pages/CyberBugs/UserManagement/UserManagement.js";
 
 export default function App() {
    const history = useHistory();
@@ -39,11 +41,12 @@ export default function App() {
          <DrawerCyberBugs />
          <Switch>
             <HomeTemplate path="/home" exact Component={Home} />
+            <HomeTemplate path="/" exact Component={Home} />
             <HomeTemplate exact path="/contact" Component={Contact} />
             <HomeTemplate exact path="/about" Component={About} />
             <HomeTemplate exact path="/dragdrop" Component={DemoDragDrop} />
             <UserLoginTemplate exact path="/login" Component={LoginCyberBugs} />
-            <UserLoginTemplate exact path="/" Component={LoginCyberBugs} />
+            <UserLoginTemplate exact path="/signup" Component={Signup} />
             <HomeTemplate exact path="/detail/:id" Component={Detail} />
             <HomeTemplate exact path="/profile" Component={Profile} />
             <HomeTemplate exact path="/todolistrfc" Component={TodolistRFC} />
@@ -56,6 +59,7 @@ export default function App() {
             <CyberbugsTemplate exact path="/cyberbugs" Component={indexCyberBugs} />
             <CyberbugsTemplate exact path="/createproject" Component={CreateProject} />
             <CyberbugsTemplate exact path="/projectmanagement" Component={ProjectManagement} />
+            <CyberbugsTemplate exact path="/usermanagement" Component={UserManagement} />
             <CyberbugsTemplate exact path="/projectdetail/:projectId" Component={indexCyberBugs} />
             <HomeTemplate path="*" component={PageNotFound} />
          </Switch>

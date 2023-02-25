@@ -4,6 +4,7 @@ import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import FormEditProject from "../../../components/Forms/FormEditProject.js/FormEditProject";
 import { NavLink } from "react-router-dom";
+import { GET_USER_API_SAGA } from "../../../redux/constants/Cyberbugs/Cyberbugs.js";
 
 export default function ProjectManagement(props) {
    //Lấy dữ liệu từ reducer về component
@@ -207,7 +208,7 @@ export default function ProjectManagement(props) {
                                  }
                                  searchRef.current = setTimeout(() => {
                                     dispatch({
-                                       type: "GET_USER_API",
+                                       type: GET_USER_API_SAGA,
                                        keyWord: value,
                                     });
                                  }, 300);

@@ -1,10 +1,18 @@
 import { baseService } from "./baseService";
 
 export class UserService extends baseService {
-   getUser = (keyWord) => {
-      return this.get(`Users/getUser?keyword=${keyWord}`);
+   getUser = (keyword) => {
+      return this.get(`Users/getUser?keyword=${keyword}`);
    };
-
+   getListUser = () => {
+      return this.get(`Users/getUser?keyword=${""}`);
+   };
+   editUser = (userEdit) => {
+      return this.put(`Users/editUser`, userEdit);
+   };
+   deleteUser = (userId) => {
+      return this.delete(`Users/deleteUser?id=${userId}`);
+   };
    assignUserProject = (userProject) => {
       return this.post(`Project/assignUserProject`, userProject);
    };

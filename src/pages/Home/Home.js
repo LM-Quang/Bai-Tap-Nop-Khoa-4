@@ -1,15 +1,18 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React from "react";
+import { NavLink } from "react-router-dom";
 
 export default function Home(props) {
-    const userLogin = useSelector(state => state.UserLoginCyberBugsReducer.userLogin)
-    return (
-        <div>
-            {userLogin?.name}
-            <img src={userLogin?.avatar} />
-        </div>
-    )
+   return (
+      <div>
+         Vui lòng
+         <NavLink className="mx-2" to="/login">
+            Login
+         </NavLink>
+         để vào hệ thống hoặc
+         <NavLink className="mx-2" to="/signup">
+            Sign Up
+         </NavLink>
+         nếu chưa có tài khoản
+      </div>
+   );
 }
-
-
-

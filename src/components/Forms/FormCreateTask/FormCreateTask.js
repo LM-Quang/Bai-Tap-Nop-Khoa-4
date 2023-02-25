@@ -9,6 +9,7 @@ import { withFormik } from "formik";
 import * as Yup from "yup";
 import { GET_ALL_STATUS_SAGA } from "../../../redux/constants/Cyberbugs/StatusConstant";
 import { GET_USER_BY_PROJECT_ID_SAGA } from "../../../redux/constants/Cyberbugs/UserConstatnts";
+import { GET_USER_API_SAGA } from "../../../redux/constants/Cyberbugs/Cyberbugs.js";
 
 function FormCreateTask(props) {
    //Lấy dữ liệu từ redux
@@ -45,7 +46,7 @@ function FormCreateTask(props) {
       dispatch({ type: GET_ALL_STATUS_SAGA });
       //Đưa hàm handle submit lên drawer reducer để cập nhật lại sự kiện cho nút submitt
       dispatch({ type: "SET_SUBMIT_CREATE_TASK", submitFunction: handleSubmit });
-      dispatch({ type: "GET_USER_API", keyWord: "" });
+      dispatch({ type: GET_USER_API_SAGA, keyWord: "" });
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
    return (
